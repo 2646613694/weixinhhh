@@ -1,10 +1,13 @@
 package com.jumpower.weixinhhh.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.jumpower.weixinhhh.bean.ArticleItem;
 import com.jumpower.weixinhhh.bean.WeChatContant;
 
 import com.jumpower.weixinhhh.util.FaceUtil;
 import com.jumpower.weixinhhh.util.WeChatUtil;
+import com.jumpower.weixinhhh.util.WeiXinUserInfoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,22 +76,21 @@ public class WeChatServiceImpl implements WeChatService{
                     respXml = WeChatUtil.sendArticleMsg(requestMap, items);
                 }else if("我的信息".equals(mes)){
                     String s = requestMap.get(WeChatContant.FromUserName);
+                    String userInfo = WeiXinUserInfoUtils.getUserInfo(s);
                     System.out.println(s);
-                    /*Map<String, String> userInfo = getUserInfo(requestMap.get(WeChatContant.FromUserName));
-                    System.out.println(userInfo.toString());
-                    String nickname = userInfo.get("nickname");
-                    String city = userInfo.get("city");
-                    String province = userInfo.get("province");
-                    String country = userInfo.get("country");
-                    String headimgurl = userInfo.get("headimgurl");*/
+                    JSONObject object = (JSONObject) JSONObject.parse(userInfo);
+                    String  nickname = object.getString("nickname");
+                    String city = object.getString("city");
+                    String province = object.getString("province");
+                    String country = object.getString("country");
+                    String headimgurl = object.getString("headimgurl");
                     List<ArticleItem> items = new ArrayList<>();
                     ArticleItem item = new ArticleItem();
                     item.setTitle("你的信息");
-                    item.setDescription("昵称:"+11+"  地址:"+1+" "+1+" "+1);
-                    item.setPicUrl("https://img1.doubanio.com/view/group_topic/large/public/p116915028.jpg");
+                    item.setDescription("昵称:"+nickname+"  地址:"+country+" "+province+" "+city);
+                    item.setPicUrl(headimgurl);
                     item.setUrl("http://www.baidu.com");
                     items.add(item);
-
                     respXml = WeChatUtil.sendArticleMsg(requestMap, items);
                 }
             }
@@ -147,7 +149,7 @@ public class WeChatServiceImpl implements WeChatService{
                     // TODO 处理菜单点击事件
                 }
             }
-            mes = mes == null ? "不知道你在干嘛" : mes;
+            mes = mes == null ? "哎哟，你来哟，欢迎见证小菜鸡的成长之路" : mes;
             if(respXml == null) {
                // System.out.println("消息是"+mes);
                 respXml = WeChatUtil.sendTextMsg(requestMap, mes);

@@ -64,6 +64,14 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.databinder/dispatch-http -->
+        <dependency>
+            <groupId>net.databinder</groupId>
+            <artifactId>dispatch-http_2.9.0</artifactId>
+            <version>0.8.10</version>
+        </dependency>
+
     </dependencies>
 
     <build>
