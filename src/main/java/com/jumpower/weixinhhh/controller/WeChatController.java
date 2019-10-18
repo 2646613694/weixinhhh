@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @RestController
 public class WeChatController {
@@ -26,14 +27,16 @@ public class WeChatController {
     public String validate(@RequestParam(value = "signature") String signature,
                            @RequestParam(value = "timestamp") String timestamp,
                            @RequestParam(value = "nonce") String nonce,
-                           @RequestParam(value = "echostr") String echostr) {
+                           @RequestParam(value = "echostr") String echostr)  {
+
         return WeChatUtil.checkSignature(signature, timestamp, nonce) ? echostr : null;
     }
     /**
      * 此处是处理微信服务器的消息转发的
      */
     @PostMapping(value = "wechat")
-    public String processMsg(HttpServletRequest request) {
+    public String processMsg(HttpServletRequest request)  {
+
 
         // 调用核心服务类接收处理请求
         return weChatService.processRequest(request);

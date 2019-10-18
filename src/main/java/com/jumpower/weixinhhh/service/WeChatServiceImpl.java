@@ -1,18 +1,22 @@
 package com.jumpower.weixinhhh.service;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+
+import com.jumpower.weixinhhh.bean.AccessToken;
 import com.jumpower.weixinhhh.bean.ArticleItem;
 import com.jumpower.weixinhhh.bean.WeChatContant;
 
 import com.jumpower.weixinhhh.util.FaceUtil;
+import com.jumpower.weixinhhh.util.MenuUtil;
 import com.jumpower.weixinhhh.util.WeChatUtil;
 import com.jumpower.weixinhhh.util.WeiXinUserInfoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import net.sf.json.JSONObject;
+
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -75,23 +79,24 @@ public class WeChatServiceImpl implements WeChatService{
 
                     respXml = WeChatUtil.sendArticleMsg(requestMap, items);
                 }else if("我的信息".equals(mes)){
-                    String s = requestMap.get(WeChatContant.FromUserName);
-                    String userInfo = WeiXinUserInfoUtils.getUserInfo(s);
-                    System.out.println(s);
-                    JSONObject object = (JSONObject) JSONObject.parse(userInfo);
-                    String  nickname = object.getString("nickname");
-                    String city = object.getString("city");
-                    String province = object.getString("province");
-                    String country = object.getString("country");
-                    String headimgurl = object.getString("headimgurl");
-                    List<ArticleItem> items = new ArrayList<>();
-                    ArticleItem item = new ArticleItem();
-                    item.setTitle("你的信息");
-                    item.setDescription("昵称:"+nickname+"  地址:"+country+" "+province+" "+city);
-                    item.setPicUrl(headimgurl);
-                    item.setUrl("http://www.baidu.com");
-                    items.add(item);
-                    respXml = WeChatUtil.sendArticleMsg(requestMap, items);
+//                    String s = requestMap.get(WeChatContant.FromUserName);
+//                    String userInfo = WeiXinUserInfoUtils.getUserInfo(s);
+//                    System.out.println(s);
+//                    JSONObject object = (JSONObject) JSONObject.fromObject(userInfo);
+//                    String  nickname = object.getString("nickname");
+//                    String city = object.getString("city");
+//                    String province = object.getString("province");
+//                    String country = object.getString("country");
+//                    String headimgurl = object.getString("headimgurl");
+//                    List<ArticleItem> items = new ArrayList<>();
+//                    ArticleItem item = new ArticleItem();
+//                    item.setTitle("你的信息");
+//                    item.setDescription("昵称:"+nickname+"  地址:"+country+" "+province+" "+city);
+//                    item.setPicUrl(headimgurl);
+//                    item.setUrl("http://www.baidu.com");
+//                    items.add(item);
+//                    respXml = WeChatUtil.sendArticleMsg(requestMap, items);
+                    createMenu();
                 }
             }
             // 图片消息
@@ -129,6 +134,7 @@ public class WeChatServiceImpl implements WeChatService{
                 String eventType = (String) requestMap.get(WeChatContant.Event);
                 // 关注
                 if (eventType.equals(WeChatContant.EVENT_TYPE_SUBSCRIBE)) {
+
                     respContent = "谢谢您的关注！";
                     respXml = WeChatUtil.sendTextMsg(requestMap, respContent);
                 }
@@ -146,7 +152,7 @@ public class WeChatServiceImpl implements WeChatService{
                 }
                 // 自定义菜单
                 else if (eventType.equals(WeChatContant.EVENT_TYPE_CLICK)) {
-                    // TODO 处理菜单点击事件
+                  createMenu();
                 }
             }
             mes = mes == null ? "哎哟，你来哟，欢迎见证小菜鸡的成长之路" : mes;
@@ -161,6 +167,16 @@ public class WeChatServiceImpl implements WeChatService{
         }
         return "";
 
+    }
+
+    @Override
+    public void createMenu() throws IOException {
+        AccessToken accessToken = WeChatContant.getAccessToken();
+        //获取access_token
+        String token = accessToken.getToken();
+
+        String menu = JSONObject.fromObject(MenuUtil.initMenu()).toString();
+        int result = MenuUtil.createMenu( menu,token);
     }
 
 }

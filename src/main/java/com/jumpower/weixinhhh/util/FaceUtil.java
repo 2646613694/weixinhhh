@@ -1,8 +1,9 @@
 package com.jumpower.weixinhhh.util;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import java.io.*;
 import java.net.*;
@@ -33,7 +34,7 @@ public  class FaceUtil {
             byte[] bacd = post(url, map, byteMap);
              str = new String(bacd);
              //获取人脸信息并转化为JSON格式
-            JSONObject object = (JSONObject) JSONObject.parse(str);
+            JSONObject object = (JSONObject) JSONObject.fromObject(str);
             //Object o=object.getJSONObject("faces").getJSONObject("attributes").getJSONObject("age").get("value");
             JSONArray faces = object.getJSONArray("faces");
             for(int i=0;i<faces.size();i++){
