@@ -18,25 +18,25 @@ public class MenuUtil {
         ClickButton clickButton = new ClickButton();
         clickButton.setKey("clickButton");
         clickButton.setType("click");
-        clickButton.setName("clickMenu");
+        clickButton.setName("你好");
 
         ViewButton viewButton = new ViewButton();
-        viewButton.setName("viewButton");
+        viewButton.setName("百度一下");
         viewButton.setType("view");
         viewButton.setUrl("http://www.baidu.com");
 
         ClickButton clickButton1 = new ClickButton();
         clickButton1.setKey("scanButton");
         clickButton1.setType("scancode_push");
-        clickButton1.setName("scanButton");
+        clickButton1.setName("菜单1");
 
         ClickButton clickButton2 = new ClickButton();
         clickButton2.setKey("locationButton");
         clickButton2.setType("location_select");
-        clickButton2.setName("locationButton");
+        clickButton2.setName("菜单2");
 
         Button button = new Button();
-        button.setName("Menu");
+        button.setName("我是菜单");
         button.setSub_button(new Button[]{clickButton1, clickButton2});
 
         menu.setButton(new Button[]{clickButton, viewButton, button});

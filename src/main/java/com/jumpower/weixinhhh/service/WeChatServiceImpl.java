@@ -28,12 +28,13 @@ import java.util.Map;
 public class WeChatServiceImpl implements WeChatService{
 
     private static final String GET_USERINFO_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
-
+    private static final String GET_MENUINFO_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
 
 
 
      @Override
     public String processRequest(HttpServletRequest request) {
+
         // xml格式的消息数据
         String respXml = null;
         // 默认返回的文本消息内容
@@ -41,9 +42,12 @@ public class WeChatServiceImpl implements WeChatService{
         try {
             // 调用parseXml方法解析请求消息
             Map<String,String> requestMap = WeChatUtil.parseXml(request);
-            // 消息类型
-            String msgType = (String) requestMap.get(WeChatContant.MsgType);
+            //获取数据
+            String fromUserName = requestMap.get("FromUserName");// 发送方账户
+            String toUserName = requestMap.get("ToUserName");// 接收方账户（公众账户）
+            String msgType = requestMap.get("MsgType");// 消息类型
             String mes = null;
+
             // 文本消息
             if (msgType.equals(WeChatContant.REQ_MESSAGE_TYPE_TEXT)) {
                 mes =requestMap.get(WeChatContant.Content).toString();
@@ -79,24 +83,24 @@ public class WeChatServiceImpl implements WeChatService{
 
                     respXml = WeChatUtil.sendArticleMsg(requestMap, items);
                 }else if("我的信息".equals(mes)){
-//                    String s = requestMap.get(WeChatContant.FromUserName);
-//                    String userInfo = WeiXinUserInfoUtils.getUserInfo(s);
-//                    System.out.println(s);
-//                    JSONObject object = (JSONObject) JSONObject.fromObject(userInfo);
-//                    String  nickname = object.getString("nickname");
-//                    String city = object.getString("city");
-//                    String province = object.getString("province");
-//                    String country = object.getString("country");
-//                    String headimgurl = object.getString("headimgurl");
-//                    List<ArticleItem> items = new ArrayList<>();
-//                    ArticleItem item = new ArticleItem();
-//                    item.setTitle("你的信息");
-//                    item.setDescription("昵称:"+nickname+"  地址:"+country+" "+province+" "+city);
-//                    item.setPicUrl(headimgurl);
-//                    item.setUrl("http://www.baidu.com");
-//                    items.add(item);
-//                    respXml = WeChatUtil.sendArticleMsg(requestMap, items);
-                    createMenu();
+                    String s = requestMap.get(WeChatContant.FromUserName);
+                    String userInfo = WeiXinUserInfoUtils.getUserInfo(s);
+                    System.out.println(s);
+                    JSONObject object = (JSONObject) JSONObject.fromObject(userInfo);
+                    String  nickname = object.getString("nickname");
+                    String city = object.getString("city");
+                    String province = object.getString("province");
+                    String country = object.getString("country");
+                    String headimgurl = object.getString("headimgurl");
+                    List<ArticleItem> items = new ArrayList<>();
+                    ArticleItem item = new ArticleItem();
+                    item.setTitle("你的信息");
+                    item.setDescription("昵称:"+nickname+"  地址:"+country+" "+province+" "+city);
+                    item.setPicUrl(headimgurl);
+                    item.setUrl("http://www.baidu.com");
+                    items.add(item);
+                    respXml = WeChatUtil.sendArticleMsg(requestMap, items);
+
                 }
             }
             // 图片消息
@@ -171,6 +175,8 @@ public class WeChatServiceImpl implements WeChatService{
 
     @Override
     public void createMenu() throws IOException {
+         //
+        System.out.println("我进来自定义菜单的了");
         AccessToken accessToken = WeChatContant.getAccessToken();
         //获取access_token
         String token = accessToken.getToken();

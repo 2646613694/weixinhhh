@@ -161,7 +161,7 @@ public  class FaceUtil {
             url = new URL(urlList);
             DataInputStream dataInputStream = new DataInputStream(url.openStream());
 
-            String imageName =  "E:/test.jpg";
+            String imageName =  "C:/test.jpg";
 
             FileOutputStream fileOutputStream = new FileOutputStream(new File(imageName));
             ByteArrayOutputStream output = new ByteArrayOutputStream();

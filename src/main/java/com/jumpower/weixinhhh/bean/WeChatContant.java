@@ -15,11 +15,11 @@ import java.io.IOException;
 
 public class WeChatContant {
     //APPID
-    public static final String appID = "wx4c3af829f838d806";
+    public static final String appID = "wxe7f5fef32ad4afd4";
     //appsecret
-    public static final String appsecret = "c2a368bed848c316aae702d1c23a57e2";
+    public static final String appsecret = "fb1cb5514cbb481e4475462ecdbf76aa";
     // Token
-    public static final String TOKEN = "caowencao5211";
+    public static final String TOKEN = "xiewantao123";
     private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
     public static final String RESP_MESSAGE_TYPE_TEXT = "text";
     public static final Object REQ_MESSAGE_TYPE_TEXT = "text";
