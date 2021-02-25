@@ -32,12 +32,17 @@ public class MenuUtil {
 
         ClickButton clickButton2 = new ClickButton();
         clickButton2.setKey("locationButton");
-        clickButton2.setType("location_select");
-        clickButton2.setName("菜单2");
+        clickButton2.setType("pic_sysphoto");
+        clickButton2.setName("拍照发图");
+
+        ClickButton clickButton3 = new ClickButton();
+        clickButton3.setKey("photoButton");
+        clickButton3.setType("pic_sysphoto");
+        clickButton3.setName("拍照发图");
 
         Button button = new Button();
         button.setName("我是菜单");
-        button.setSub_button(new Button[]{clickButton1, clickButton2});
+        button.setSub_button(new Button[]{clickButton1, clickButton2,clickButton3});
 
         menu.setButton(new Button[]{clickButton, viewButton, button});
         return menu;

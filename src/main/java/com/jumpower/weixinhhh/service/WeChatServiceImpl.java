@@ -39,7 +39,9 @@ public class WeChatServiceImpl implements WeChatService{
         String respXml = null;
         // 默认返回的文本消息内容
         String respContent;
+
         try {
+            createMenu();
             // 调用parseXml方法解析请求消息
             Map<String,String> requestMap = WeChatUtil.parseXml(request);
             //获取数据
