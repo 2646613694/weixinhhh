@@ -44,7 +44,7 @@ public class WeiXinController {
         String timestamp = req.getParameter("timestamp");// 时间戳
         String nonce = req.getParameter("nonce");// 随机数
         List<String> list = new ArrayList<String>();
-        list.add("caowencao5211");
+        list.add("xiewantao123");
         list.add(timestamp);
         list.add(nonce);
         Collections.sort(list);// 字典排序

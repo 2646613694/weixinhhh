@@ -6,7 +6,7 @@ import net.sf.json.JSONObject;
 
 import java.io.IOException;
 
-import static com.jumpower.weixinhhh.bean.WeChatContant.doGerStr;
+
 import static com.jumpower.weixinhhh.bean.WeChatContant.doPostStr;
 
 public class MenuUtil {
@@ -18,10 +18,10 @@ public class MenuUtil {
         ClickButton clickButton = new ClickButton();
         clickButton.setKey("clickButton");
         clickButton.setType("click");
-        clickButton.setName("你好");
+        clickButton.setName("12321");
 
         ViewButton viewButton = new ViewButton();
-        viewButton.setName("百度一下");
+        viewButton.setName("123");
         viewButton.setType("view");
         viewButton.setUrl("http://www.baidu.com");
 
@@ -71,8 +71,9 @@ public class MenuUtil {
 
     //查询菜单的url的拼接
     public static JSONObject queryMenu(String token) throws IOException {
+
         String url = QUERY_MENU_URL.replace("ACCESS_TOKEN", token);
-        JSONObject jsonObject = doGerStr(url);
+        JSONObject jsonObject = WeChatContant.doGerStr(url);
         return jsonObject;
     }
 }

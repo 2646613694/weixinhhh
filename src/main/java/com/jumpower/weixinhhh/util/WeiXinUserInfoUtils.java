@@ -5,6 +5,7 @@ package com.jumpower.weixinhhh.util;
 import com.jumpower.weixinhhh.bean.AccessToken;
 import com.jumpower.weixinhhh.bean.WeChatContant;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.io.IOException;
@@ -17,12 +18,14 @@ import java.io.IOException;
 public class WeiXinUserInfoUtils {
     private static final String GET_USERINFO_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
 
+
     /**
      * 获取微信用户账号的相关信息
      * @param opendID  用户的openId，这个通过当用户进行了消息交互的时候，才有
      * @return
      */
     public static String getUserInfo(String opendID) throws IOException {
+
         AccessToken accessToken = WeChatContant.getAccessToken();
         //获取access_token
         String token = accessToken.getToken();

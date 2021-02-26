@@ -31,7 +31,6 @@ public class WeChatServiceImpl implements WeChatService{
     private static final String GET_MENUINFO_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
 
 
-
      @Override
     public String processRequest(HttpServletRequest request) {
 
@@ -41,7 +40,6 @@ public class WeChatServiceImpl implements WeChatService{
         String respContent;
 
         try {
-            createMenu();
             // 调用parseXml方法解析请求消息
             Map<String,String> requestMap = WeChatUtil.parseXml(request);
             //获取数据
@@ -49,7 +47,7 @@ public class WeChatServiceImpl implements WeChatService{
             String toUserName = requestMap.get("ToUserName");// 接收方账户（公众账户）
             String msgType = requestMap.get("MsgType");// 消息类型
             String mes = null;
-
+            createMenu();
             // 文本消息
             if (msgType.equals(WeChatContant.REQ_MESSAGE_TYPE_TEXT)) {
                 mes =requestMap.get(WeChatContant.Content).toString();
@@ -158,10 +156,11 @@ public class WeChatServiceImpl implements WeChatService{
                 }
                 // 自定义菜单
                 else if (eventType.equals(WeChatContant.EVENT_TYPE_CLICK)) {
-                  createMenu();
+
                 }
             }
             mes = mes == null ? "哎哟，你来哟，欢迎见证小菜鸡的成长之路" : mes;
+
             if(respXml == null) {
                // System.out.println("消息是"+mes);
                 respXml = WeChatUtil.sendTextMsg(requestMap, mes);
