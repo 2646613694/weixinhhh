@@ -18,12 +18,12 @@ public class MenuUtil {
         ClickButton clickButton = new ClickButton();
         clickButton.setKey("clickButton");
         clickButton.setType("click");
-        clickButton.setName("12321");
+        clickButton.setName("输出你好");
 
         ViewButton viewButton = new ViewButton();
-        viewButton.setName("123");
+        viewButton.setName("百度一下");
         viewButton.setType("view");
-        viewButton.setUrl("http://www.baidu.com");
+        viewButton.setUrl("https://www.baidu.com/");
 
         ClickButton clickButton1 = new ClickButton();
         clickButton1.setKey("scanButton");
@@ -38,21 +38,17 @@ public class MenuUtil {
         ClickButton clickButton3 = new ClickButton();
         clickButton3.setKey("photoButton");
         clickButton3.setType("pic_sysphoto");
-        clickButton3.setName("拍照发图");
+        clickButton3.setName("拍照");
 
         ClickButton clickButton4 = new ClickButton();
         clickButton4.setKey("picButton");
         clickButton4.setType("pic_weixin");
         clickButton4.setName("相册发图");
 
-        ClickButton clickButton5 = new ClickButton();
-        clickButton5.setKey("pages/index/index");
-        clickButton5.setType("view_miniprogram");
-        clickButton5.setName("跳小程序");
 
         Button button = new Button();
-        button.setName("我是菜单");
-        button.setSub_button(new Button[]{clickButton1, clickButton2,clickButton3,clickButton4,clickButton5});
+        button.setName("你是菜单");
+        button.setSub_button(new Button[]{clickButton1, clickButton2,clickButton3,clickButton4});
 
         menu.setButton(new Button[]{clickButton, viewButton, button});
         return menu;

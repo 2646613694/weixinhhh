@@ -5,10 +5,7 @@ import com.jumpower.weixinhhh.bean.AccessToken;
 import com.jumpower.weixinhhh.bean.ArticleItem;
 import com.jumpower.weixinhhh.bean.WeChatContant;
 
-import com.jumpower.weixinhhh.util.FaceUtil;
-import com.jumpower.weixinhhh.util.MenuUtil;
-import com.jumpower.weixinhhh.util.WeChatUtil;
-import com.jumpower.weixinhhh.util.WeiXinUserInfoUtils;
+import com.jumpower.weixinhhh.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import net.sf.json.JSONObject;
@@ -51,6 +48,7 @@ public class WeChatServiceImpl implements WeChatService{
             // 文本消息
             if (msgType.equals(WeChatContant.REQ_MESSAGE_TYPE_TEXT)) {
                 mes =requestMap.get(WeChatContant.Content).toString();
+                seachCtity(mes);
                 if(mes!=null&&mes.length()<2){
                     List<ArticleItem> items = new ArrayList<>();
                     ArticleItem item = new ArticleItem();
@@ -177,13 +175,24 @@ public class WeChatServiceImpl implements WeChatService{
     @Override
     public void createMenu() throws IOException {
          //
-        System.out.println("我进来自定义菜单的了");
+
         AccessToken accessToken = WeChatContant.getAccessToken();
         //获取access_token
         String token = accessToken.getToken();
 
         String menu = JSONObject.fromObject(MenuUtil.initMenu()).toString();
         int result = MenuUtil.createMenu( menu,token);
+    }
+
+
+    @Override
+    public void seachCtity(String text) throws IOException {
+        System.out.println("语意理解的");
+        AccessToken accessToken = WeChatContant.getAccessToken();
+        //获取access_token
+        String token = accessToken.getToken();
+        String menu = JSONObject.fromObject(SearchUtil.initMenu()).toString();
+        int result = SearchUtil.seachCtity( menu,token);
     }
 
 }

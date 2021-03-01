@@ -8,4 +8,6 @@ public interface WeChatService {
      String processRequest(HttpServletRequest request);
 
      void  createMenu() throws IOException;
+
+     void  seachCtity(String text) throws IOException;
 }
